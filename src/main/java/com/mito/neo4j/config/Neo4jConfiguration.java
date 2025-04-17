@@ -1,40 +1,34 @@
 package com.mito.neo4j.config;
 
-import org.neo4j.driver.AuthTokens;
-import org.neo4j.driver.Driver;
-import org.neo4j.driver.GraphDatabase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.neo4j.core.DatabaseSelectionProvider;
+import org.springframework.data.neo4j.core.transaction.Neo4jTransactionManager;
+import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
 @Configuration
+@EnableNeo4jRepositories(basePackages = "com.mito.neo4j.repository")
+@EnableTransactionManagement
 public class Neo4jConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(Neo4jConfiguration.class);
 
-    @Value("${neo4j.uri}")
-    private String neo4jUri;
-
-    @Value("${neo4j.username}")
-    private String neo4jUsername;
-
-    @Value("${neo4j.password}")
-    private String neo4jPassword;
+    @Value("${spring.data.neo4j.database}")
+    private String database;
 
     @Bean
-    public Driver neo4jDriver() {
-        logger.info("Connecting to Neo4j at: {}", neo4jUri);
-        return GraphDatabase.driver(
-            neo4jUri,
-            AuthTokens.basic(neo4jUsername, neo4jPassword)
-        );
+    DatabaseSelectionProvider databaseSelectionProvider() {
+        return () -> org.springframework.data.neo4j.core.DatabaseSelection.byName(database);
     }
 
     @Bean
