@@ -1,4 +1,4 @@
-package com.mito.neo4j.domain.repository;
+package com.mito.neo4j.repository;
 
 
 import com.mito.neo4j.domain.model.GraphNode;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface SpringDataNodeRepository extends Neo4jRepository<GraphNode, String> {
+public interface SpringDataNodeRepository extends Neo4jRepository<GraphNode, Long> {
     
     /**
      * Trova nodi per etichetta

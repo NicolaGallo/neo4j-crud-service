@@ -29,7 +29,7 @@ public class RelationshipService {
     }
 
     @Transactional
-    public Optional<Relationship> createRelationship(String type, String sourceNodeId, String targetNodeId) {
+    public Optional<Relationship> createRelationship(String type, Long sourceNodeId, Long targetNodeId) {
         // Verify that both nodes exist
         boolean sourceExists = nodeRepository.findNodeById(sourceNodeId).isPresent();
         boolean targetExists = nodeRepository.findNodeById(targetNodeId).isPresent();
@@ -48,7 +48,7 @@ public class RelationshipService {
         return Optional.of(createdRelationship);
     }
 
-    public Optional<Relationship> findRelationshipById(String id) {
+    public Optional<Relationship> findRelationshipById(Long id) {
         return relationshipRepository.findRelationshipById(id);
     }
 
@@ -65,7 +65,7 @@ public class RelationshipService {
     }
 
     @Transactional
-    public boolean deleteRelationship(String id) {
+    public boolean deleteRelationship(Long id) {
         boolean deleted = relationshipRepository.deleteRelationship(id);
         
         if (deleted) {

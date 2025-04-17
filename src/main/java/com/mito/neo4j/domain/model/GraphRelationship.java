@@ -1,6 +1,7 @@
 package com.mito.neo4j.domain.model;
 
 import org.springframework.data.neo4j.core.schema.Id;
+import org.springframework.data.neo4j.core.schema.RelationshipId;
 import org.springframework.data.neo4j.core.schema.RelationshipProperties;
 import org.springframework.data.neo4j.core.schema.TargetNode;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
@@ -11,15 +12,16 @@ import java.util.UUID;
 
 @RelationshipProperties
 public class GraphRelationship {
+
     @Id
-    @GeneratedValue(UUIDStringGenerator.class)
-    private String id;
+    @GeneratedValue
+    private Long id;
     
     private String type;
     
-    private String sourceNodeId;
+    private Long sourceNodeId;
     
-    private String targetNodeId;
+    private Long targetNodeId;
     
     @TargetNode
     private GraphNode targetNode;
@@ -28,26 +30,26 @@ public class GraphRelationship {
     public GraphRelationship() {
     }
 
-    private GraphRelationship(String id, String type, String sourceNodeId, String targetNodeId) {
+    private GraphRelationship(Long id, String type, Long sourceNodeId, Long targetNodeId) {
         this.id = id;
         this.type = type;
         this.sourceNodeId = sourceNodeId;
         this.targetNodeId = targetNodeId;
     }
 
-    public static GraphRelationship create(String type, String sourceNodeId, String targetNodeId) {
+    public static GraphRelationship create(String type, Long sourceNodeId, Long targetNodeId) {
         return new GraphRelationship(null, type, sourceNodeId, targetNodeId);
     }
 
-    public static GraphRelationship of(String id, String type, String sourceNodeId, String targetNodeId) {
+    public static GraphRelationship of(Long id, String type, Long sourceNodeId, Long targetNodeId) {
         return new GraphRelationship(id, type, sourceNodeId, targetNodeId);
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
     
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,19 +61,19 @@ public class GraphRelationship {
         this.type = type;
     }
 
-    public String getSourceNodeId() {
+    public Long getSourceNodeId() {
         return sourceNodeId;
     }
     
-    public void setSourceNodeId(String sourceNodeId) {
+    public void setSourceNodeId(Long sourceNodeId) {
         this.sourceNodeId = sourceNodeId;
     }
 
-    public String getTargetNodeId() {
+    public Long getTargetNodeId() {
         return targetNodeId;
     }
     
-    public void setTargetNodeId(String targetNodeId) {
+    public void setTargetNodeId(Long targetNodeId) {
         this.targetNodeId = targetNodeId;
     }
     

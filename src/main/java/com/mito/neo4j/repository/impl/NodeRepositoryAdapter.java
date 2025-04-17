@@ -2,8 +2,10 @@ package com.mito.neo4j.repository.impl;
 
 import com.mito.neo4j.domain.model.Node;
 import com.mito.neo4j.domain.repository.NodeRepository;
+import com.mito.neo4j.repository.SpringDataNodeRepository;
 import com.mito.neo4j.domain.model.GraphNode;
-import com.mito.neo4j.domain.repository.SpringDataNodeRepository;
+
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
+@Primary
 public class NodeRepositoryAdapter implements NodeRepository {
 
     private final SpringDataNodeRepository springDataNodeRepository;
@@ -27,7 +30,7 @@ public class NodeRepositoryAdapter implements NodeRepository {
     }
 
     @Override
-    public Optional<Node> findNodeById(String id) {
+    public Optional<Node> findNodeById(Long id) {
         return springDataNodeRepository.findById(id)
                 .map(this::toNode);
     }
@@ -62,7 +65,7 @@ public class NodeRepositoryAdapter implements NodeRepository {
     }
 
     @Override
-    public boolean deleteNode(String id) {
+    public boolean deleteNode(Long id) {
         if (springDataNodeRepository.existsById(id)) {
             springDataNodeRepository.deleteById(id);
             return true;

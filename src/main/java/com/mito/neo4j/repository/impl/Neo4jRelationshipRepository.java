@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+
 public class Neo4jRelationshipRepository implements RelationshipRepository {
 
     private final Driver driver;
@@ -46,7 +46,7 @@ public class Neo4jRelationshipRepository implements RelationshipRepository {
     }
 
     @Override
-    public Optional<Relationship> findRelationshipById(String id) {
+    public Optional<Relationship> findRelationshipById(Long id) {
         try (Session session = driver.session()) {
             String query = "MATCH (source)-[r {id: $id}]->(target) " +
                            "RETURN r, type(r) as type, source.id as sourceId, target.id as targetId";
@@ -123,7 +123,7 @@ public class Neo4jRelationshipRepository implements RelationshipRepository {
     }
 
     @Override
-    public boolean deleteRelationship(String id) {
+    public boolean deleteRelationship(Long id) {
         try (Session session = driver.session()) {
             String query = "MATCH ()-[r {id: $id}]->() DELETE r RETURN count(r) as count";
             
@@ -139,11 +139,11 @@ public class Neo4jRelationshipRepository implements RelationshipRepository {
     private Relationship mapToRelationship(Record record) {
         Value relationshipValue = record.get("r");
         String type = record.get("type").asString();
-        String sourceId = record.get("sourceId").asString();
-        String targetId = record.get("targetId").asString();
+        Long sourceId = record.get("sourceId").asLong();
+        Long targetId = record.get("targetId").asLong();
         
         MapAccessor relProps = relationshipValue.asRelationship();
-        String id = relProps.get("id").asString();
+        Long id = relProps.get("id").asLong();
         
         return Relationship.of(id, type, sourceId, targetId);
     }

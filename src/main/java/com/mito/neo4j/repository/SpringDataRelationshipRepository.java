@@ -1,5 +1,4 @@
-package com.mito.neo4j.domain.repository;
-
+package com.mito.neo4j.repository;
 
 import com.mito.neo4j.domain.model.GraphRelationship;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SpringDataRelationshipRepository extends Neo4jRepository<GraphRelationship, String> {
+public interface SpringDataRelationshipRepository extends Neo4jRepository<GraphRelationship, Long> {
     
     /**
      * Trova relazioni per tipo

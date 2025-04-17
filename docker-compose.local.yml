@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  neo4j:
+    image: neo4j:latest
+    container_name: neo4j-local
+    ports:
+      - "${NEO4J_HTTP_PORT}:7474"
+      - "${NEO4J_BOLT_PORT}:7687"
+    environment:
+      - NEO4J_AUTH=${NEO4J_AUTH}
+      - NEO4J_dbms_memory_heap_max__size=${NEO4J_dbms_memory_heap_max__size}
+      - NEO4J_PLUGINS=${NEO4J_PLUGINS}
+      - NEO4J_apoc_export_file_enabled=${NEO4J_apoc_export_file_enabled}
+      - NEO4J_apoc_import_file_enabled=${NEO4J_apoc_import_file_enabled}
+      - NEO4J_apoc_import_file_use__neo4j__config=${NEO4J_apoc_import_file_use__neo4j__config}
+    volumes:
+      - neo4j-local-data:/data
+      - neo4j-local-logs:/logs
+      - ./plugins:/plugins
+    networks:
+      - neo4j-network
+
+  neo4j-crud-service:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: neo4j-crud-service-local
+    ports:
+      - "${APP_PORT}:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_NEO4J_URI=${NEO4J_URI}
+      - SPRING_NEO4J_AUTHENTICATION_USERNAME=${NEO4J_USERNAME}
+      - SPRING_NEO4J_AUTHENTICATION_PASSWORD=${NEO4J_PASSWORD}
+      - SPRING_DATA_NEO4J_DATABASE=${NEO4J_DATABASE}
+    depends_on:
+      - neo4j
+    networks:
+      - neo4j-network
+
+networks:
+  neo4j-network:
+    driver: bridge
+
+volumes:
+  neo4j-local-data:
+  neo4j-local-logs:

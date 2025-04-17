@@ -1,0 +1,49 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: neo4j-crud-service
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  neo4j:
+    # Le credenziali verranno fornite tramite variabili d'ambiente
+    # e dovrebbero essere gestite in modo sicuro in produzione
+    # Nota: Neo4j Aura utilizza connessioni sicure (neo4j+s://)
+    uri: ${SPRING_NEO4J_URI:bolt://localhost:7687}  # Valore predefinito dopo i due punti
+    authentication:
+      username: ${SPRING_NEO4J_AUTHENTICATION_USERNAME}
+      password: ${SPRING_NEO4J_AUTHENTICATION_PASSWORD}
+  data:
+    neo4j:
+      database: ${SPRING_DATA_NEO4J_DATABASE:neo4j}
+
+# Configurazione per Spring Boot Actuator (per healthcheck)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+
+logging:
+  level:
+    com.mito.neo4j: INFO
+    org.springframework: WARN
+    org.neo4j.driver: WARN
+    org.springframework.data.neo4j: INFO
+  file:
+    name: /var/log/neo4j-crud-service.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

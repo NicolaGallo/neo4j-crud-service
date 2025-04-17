@@ -7,15 +7,15 @@ public class CreateRelationshipRequest {
     private String type;
 
     @NotBlank(message = "Source node ID is required")
-    private String sourceNodeId;
+    private Long sourceNodeId;
 
     @NotBlank(message = "Target node ID is required")
-    private String targetNodeId;
+    private Long targetNodeId;
 
     public CreateRelationshipRequest() {
     }
 
-    public CreateRelationshipRequest(String type, String sourceNodeId, String targetNodeId) {
+    public CreateRelationshipRequest(String type, Long sourceNodeId, Long targetNodeId) {
         this.type = type;
         this.sourceNodeId = sourceNodeId;
         this.targetNodeId = targetNodeId;
@@ -29,19 +29,19 @@ public class CreateRelationshipRequest {
         this.type = type;
     }
 
-    public String getSourceNodeId() {
+    public Long getSourceNodeId() {
         return sourceNodeId;
     }
 
-    public void setSourceNodeId(String sourceNodeId) {
+    public void setSourceNodeId(Long sourceNodeId) {
         this.sourceNodeId = sourceNodeId;
     }
 
-    public String getTargetNodeId() {
+    public Long getTargetNodeId() {
         return targetNodeId;
     }
 
-    public void setTargetNodeId(String targetNodeId) {
+    public void setTargetNodeId(Long targetNodeId) {
         this.targetNodeId = targetNodeId;
     }
 }

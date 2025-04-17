@@ -42,7 +42,7 @@ public class RelationshipController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<RelationshipDTO>> getRelationshipById(@PathVariable String id) {
+    public ResponseEntity<ApiResponse<RelationshipDTO>> getRelationshipById(@PathVariable Long id) {
         logger.info("Fetching relationship with ID: {}", id);
         
         return relationshipService.findRelationshipById(id)
@@ -92,7 +92,7 @@ public class RelationshipController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteRelationship(@PathVariable String id) {
+    public ResponseEntity<ApiResponse<Void>> deleteRelationship(@PathVariable Long id) {
         logger.info("Deleting relationship with ID: {}", id);
         
         boolean deleted = relationshipService.deleteRelationship(id);

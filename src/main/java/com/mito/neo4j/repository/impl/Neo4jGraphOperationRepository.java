@@ -24,7 +24,7 @@ public class Neo4jGraphOperationRepository implements GraphOperationRepository {
     private final RowMapper<GraphOperation> operationRowMapper = (rs, rowNum) -> {
         return GraphOperation.of(
             GraphOperation.OperationType.valueOf(rs.getString("type")),
-            rs.getString("entity_id")
+            rs.getLong("entity_id")
         );
     };
 
@@ -45,7 +45,7 @@ public class Neo4jGraphOperationRepository implements GraphOperationRepository {
     }
 
     @Override
-    public List<GraphOperation> findOperationsByEntityId(String entityId) {
+    public List<GraphOperation> findOperationsByEntityId(Long entityId) {
         return jdbcTemplate.query(FIND_BY_ENTITY, operationRowMapper, entityId);
     }
 

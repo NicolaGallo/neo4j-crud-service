@@ -38,7 +38,7 @@ public class NodeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<NodeDTO>> getNodeById(@PathVariable String id) {
+    public ResponseEntity<ApiResponse<NodeDTO>> getNodeById(@PathVariable Long id) {
         logger.info("Fetching node with ID: {}", id);
         
         return nodeService.findNodeById(id)
@@ -70,7 +70,7 @@ public class NodeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<NodeDTO>> updateNode(
-            @PathVariable String id,
+            @PathVariable Long id,
             @Valid @RequestBody UpdateNodeRequest request) {
         logger.info("Updating node with ID: {}", id);
         
@@ -82,7 +82,7 @@ public class NodeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteNode(@PathVariable String id) {
+    public ResponseEntity<ApiResponse<Void>> deleteNode(@PathVariable Long id) {
         logger.info("Deleting node with ID: {}", id);
         
         boolean deleted = nodeService.deleteNode(id);

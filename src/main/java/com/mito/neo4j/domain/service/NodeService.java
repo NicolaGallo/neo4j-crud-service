@@ -4,6 +4,9 @@ import com.mito.neo4j.domain.model.GraphOperation;
 import com.mito.neo4j.domain.model.Node;
 import com.mito.neo4j.domain.repository.GraphOperationRepository;
 import com.mito.neo4j.domain.repository.NodeRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +19,8 @@ public class NodeService {
 
     private final NodeRepository nodeRepository;
     private final GraphOperationRepository operationRepository;
-
+    
+    @Autowired
     public NodeService(NodeRepository nodeRepository, GraphOperationRepository operationRepository) {
         this.nodeRepository = nodeRepository;
         this.operationRepository = operationRepository;
@@ -34,7 +38,7 @@ public class NodeService {
         return createdNode;
     }
 
-    public Optional<Node> findNodeById(String id) {
+    public Optional<Node> findNodeById(Long id) {
         return nodeRepository.findNodeById(id);
     }
 
@@ -47,7 +51,7 @@ public class NodeService {
     }
 
     @Transactional
-    public Optional<Node> updateNode(String id, Map<String, Object> properties) {
+    public Optional<Node> updateNode(Long id, Map<String, Object> properties) {
         return nodeRepository.findNodeById(id)
             .map(existingNode -> {
                 Node updatedNode = existingNode.updateProperties(properties);
@@ -62,7 +66,7 @@ public class NodeService {
     }
 
     @Transactional
-    public boolean deleteNode(String id) {
+    public boolean deleteNode(Long id) {
         boolean deleted = nodeRepository.deleteNode(id);
         
         if (deleted) {

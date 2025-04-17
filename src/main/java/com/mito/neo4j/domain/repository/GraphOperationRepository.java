@@ -17,7 +17,7 @@ public interface GraphOperationRepository {
      * @param entityId The ID of the entity
      * @return A list of operations performed on the entity
      */
-    List<GraphOperation> findOperationsByEntityId(String entityId);
+    List<GraphOperation> findOperationsByEntityId(Long entityId);
 
     /**
      * Retrieves all operations of a specific type

@@ -12,28 +12,29 @@ public class GraphOperation {
         DELETE_RELATIONSHIP
     }
 
-    private final String id;
+    private final Long id;
     private final OperationType type;
-    private final String entityId;
+    private final Long entityId;
     private final LocalDateTime timestamp;
 
-    private GraphOperation(String id, OperationType type, String entityId, LocalDateTime timestamp) {
+    private GraphOperation(Long id, OperationType type, Long entityId, LocalDateTime timestamp) {
         this.id = id;
         this.type = type;
         this.entityId = entityId;
         this.timestamp = timestamp;
     }
 
-    public static GraphOperation of(OperationType type, String entityId) {
+    public static GraphOperation of(OperationType type, Long entityId) {
+        long id = UUID.randomUUID().getLeastSignificantBits() & Long.MAX_VALUE;
         return new GraphOperation(
-                UUID.randomUUID().toString(),
+                id,
                 type,
                 entityId,
                 LocalDateTime.now()
         );
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -41,7 +42,7 @@ public class GraphOperation {
         return type;
     }
 
-    public String getEntityId() {
+    public Long getEntityId() {
         return entityId;
     }
 

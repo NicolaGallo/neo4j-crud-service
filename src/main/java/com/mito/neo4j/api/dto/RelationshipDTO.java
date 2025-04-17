@@ -5,15 +5,15 @@ import com.mito.neo4j.domain.model.Relationship;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RelationshipDTO {
-    private String id;
+    private Long id;
     private String type;
-    private String sourceNodeId;
-    private String targetNodeId;
+    private Long sourceNodeId;
+    private Long targetNodeId;
 
     public RelationshipDTO() {
     }
 
-    public RelationshipDTO(String id, String type, String sourceNodeId, String targetNodeId) {
+    public RelationshipDTO(Long id, String type, Long sourceNodeId, Long targetNodeId) {
         this.id = id;
         this.type = type;
         this.sourceNodeId = sourceNodeId;
@@ -33,11 +33,11 @@ public class RelationshipDTO {
         return Relationship.of(id, type, sourceNodeId, targetNodeId);
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -49,19 +49,19 @@ public class RelationshipDTO {
         this.type = type;
     }
 
-    public String getSourceNodeId() {
+    public Long getSourceNodeId() {
         return sourceNodeId;
     }
 
-    public void setSourceNodeId(String sourceNodeId) {
+    public void setSourceNodeId(Long sourceNodeId) {
         this.sourceNodeId = sourceNodeId;
     }
 
-    public String getTargetNodeId() {
+    public Long getTargetNodeId() {
         return targetNodeId;
     }
 
-    public void setTargetNodeId(String targetNodeId) {
+    public void setTargetNodeId(Long targetNodeId) {
         this.targetNodeId = targetNodeId;
     }
 }

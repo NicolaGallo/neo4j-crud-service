@@ -101,3 +101,16 @@ yarn-error.log
 
 # Microservice specific ignores
 ms-properties-local.yml
+
+
+
+# File di configurazione con credenziali
+.env
+.env.*
+!.env.example
+
+# Credenziali di produzione
+**/docker-compose.prod.local.yml
+
+# Eventuali override di configurazione locali
+docker-compose.override.yml

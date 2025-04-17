@@ -7,14 +7,14 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class NodeDTO {
-    private String id;
+    private Long id;
     private String label;
     private Map<String, Object> properties;
 
     public NodeDTO() {
     }
 
-    public NodeDTO(String id, String label, Map<String, Object> properties) {
+    public NodeDTO(Long id, String label, Map<String, Object> properties) {
         this.id = id;
         this.label = label;
         this.properties = properties;
@@ -32,11 +32,11 @@ public class NodeDTO {
         return Node.of(id, label, properties);
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

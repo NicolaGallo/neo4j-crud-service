@@ -18,7 +18,7 @@ public interface RelationshipRepository {
      * @param id The ID of the relationship to retrieve
      * @return An Optional containing the relationship if found, or empty otherwise
      */
-    Optional<Relationship> findRelationshipById(String id);
+    Optional<Relationship> findRelationshipById(Long id);
 
     /**
      * Retrieves all relationships of a specific type
@@ -46,5 +46,5 @@ public interface RelationshipRepository {
      * @param id The ID of the relationship to delete
      * @return true if the relationship was deleted, false otherwise
      */
-    boolean deleteRelationship(String id);
+    boolean deleteRelationship(Long id);
 }

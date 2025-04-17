@@ -6,25 +6,26 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Node {
-    private final String id;
+    private final Long id;
     private final String label;
     private final Map<String, Object> properties;
 
-    private Node(String id, String label, Map<String, Object> properties) {
+    private Node(Long id, String label, Map<String, Object> properties) {
         this.id = id;
         this.label = label;
         this.properties = new HashMap<>(properties);
     }
 
     public static Node create(String label, Map<String, Object> properties) {
-        return new Node(UUID.randomUUID().toString(), label, properties);
-    }
-
-    public static Node of(String id, String label, Map<String, Object> properties) {
+        long id = UUID.randomUUID().getLeastSignificantBits() & Long.MAX_VALUE;
         return new Node(id, label, properties);
     }
 
-    public String getId() {
+    public static Node of(Long id, String label, Map<String, Object> properties) {
+        return new Node(id, label, properties);
+    }
+
+    public Long getId() {
         return id;
     }
 

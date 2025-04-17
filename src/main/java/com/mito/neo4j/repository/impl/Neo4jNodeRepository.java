@@ -9,6 +9,7 @@ import org.neo4j.driver.Session;
 import org.neo4j.driver.Value;
 import org.neo4j.driver.Values;
 import org.neo4j.driver.types.MapAccessor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Repository
+
 public class Neo4jNodeRepository implements NodeRepository {
 
     private final Driver driver;
@@ -46,7 +47,7 @@ public class Neo4jNodeRepository implements NodeRepository {
     }
 
     @Override
-    public Optional<Node> findNodeById(String id) {
+    public Optional<Node> findNodeById(Long id) {
         try (Session session = driver.session()) {
             String query = "MATCH (n) WHERE n.id = $id RETURN n, labels(n) as labels";
             
@@ -115,7 +116,7 @@ public class Neo4jNodeRepository implements NodeRepository {
     }
 
     @Override
-    public boolean deleteNode(String id) {
+    public boolean deleteNode(Long id) {
         try (Session session = driver.session()) {
             String query = "MATCH (n {id: $id}) DETACH DELETE n RETURN count(n) as count";
             
@@ -134,7 +135,7 @@ public class Neo4jNodeRepository implements NodeRepository {
 
     private Node mapToNode(Value nodeValue, Value labelsValue) {
         MapAccessor nodeProps = nodeValue.asNode();
-        String id = nodeProps.get("id").asString();
+        Long id = nodeProps.get("id").asLong();
         
         String label;
         if (labelsValue != null) {

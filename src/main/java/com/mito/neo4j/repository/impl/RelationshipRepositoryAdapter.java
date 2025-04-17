@@ -3,14 +3,17 @@ package com.mito.neo4j.repository.impl;
 import com.mito.neo4j.domain.model.Relationship;
 import com.mito.neo4j.domain.repository.RelationshipRepository;
 import com.mito.neo4j.domain.model.GraphRelationship;
-import com.mito.neo4j.domain.repository.SpringDataRelationshipRepository;
-import com.mito.neo4j.domain.repository.SpringDataNodeRepository;
+import com.mito.neo4j.repository.SpringDataNodeRepository;
+import com.mito.neo4j.repository.SpringDataRelationshipRepository;
+
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Primary
 @Component
 public class RelationshipRepositoryAdapter implements RelationshipRepository {
 
@@ -37,7 +40,7 @@ public class RelationshipRepositoryAdapter implements RelationshipRepository {
     }
 
     @Override
-    public Optional<Relationship> findRelationshipById(String id) {
+    public Optional<Relationship> findRelationshipById(Long id) {
         return springDataRelationshipRepository.findById(id)
                 .map(this::toRelationship);
     }
@@ -64,7 +67,7 @@ public class RelationshipRepositoryAdapter implements RelationshipRepository {
     }
 
     @Override
-    public boolean deleteRelationship(String id) {
+    public boolean deleteRelationship(Long id) {
         if (springDataRelationshipRepository.existsById(id)) {
             springDataRelationshipRepository.deleteById(id);
             return true;

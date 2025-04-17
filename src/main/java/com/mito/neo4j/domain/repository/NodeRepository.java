@@ -18,7 +18,7 @@ public interface NodeRepository {
      * @param id The ID of the node to retrieve
      * @return An Optional containing the node if found, or empty otherwise
      */
-    Optional<Node> findNodeById(String id);
+    Optional<Node> findNodeById(Long id);
 
     /**
      * Retrieves all nodes with a specific label
@@ -45,5 +45,5 @@ public interface NodeRepository {
      * @param id The ID of the node to delete
      * @return true if the node was deleted, false otherwise
      */
-    boolean deleteNode(String id);
+    boolean deleteNode(Long id);
 }

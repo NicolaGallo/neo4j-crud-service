@@ -15,8 +15,8 @@ import java.util.Collections;
 @Node
 public class GraphNode {
     @Id
-    @GeneratedValue(UUIDStringGenerator.class)
-    private String id;
+    @GeneratedValue
+    private Long id;
     
     @DynamicLabels
     private final java.util.Set<String> labels = new java.util.LinkedHashSet<>();
@@ -27,7 +27,8 @@ public class GraphNode {
     public GraphNode() {
     }
 
-    private GraphNode(String id, String label, Map<String, Object> properties) {
+    private GraphNode(Long id, String label, Map<String, Object> properties) {
+      
         this.id = id;
         if (label != null) {
             this.labels.add(label);
@@ -42,15 +43,15 @@ public class GraphNode {
         return new GraphNode(null, label, properties);
     }
 
-    public static GraphNode of(String id, String label, Map<String, Object> properties) {
+    public static GraphNode of(Long id, String label, Map<String, Object> properties) {
         return new GraphNode(id, label, properties);
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
     
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

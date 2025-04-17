@@ -4,27 +4,28 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Relationship {
-    private final String id;
+    private final Long id;
     private final String type;
-    private final String sourceNodeId;
-    private final String targetNodeId;
+    private final Long sourceNodeId;
+    private final Long targetNodeId;
 
-    private Relationship(String id, String type, String sourceNodeId, String targetNodeId) {
+    private Relationship(Long id, String type, Long sourceNodeId, Long targetNodeId) {
         this.id = id;
         this.type = type;
         this.sourceNodeId = sourceNodeId;
         this.targetNodeId = targetNodeId;
     }
 
-    public static Relationship create(String type, String sourceNodeId, String targetNodeId) {
-        return new Relationship(UUID.randomUUID().toString(), type, sourceNodeId, targetNodeId);
-    }
-
-    public static Relationship of(String id, String type, String sourceNodeId, String targetNodeId) {
+    public static Relationship create(String type, Long sourceNodeId, Long targetNodeId) {
+        long id = UUID.randomUUID().getLeastSignificantBits() & Long.MAX_VALUE;
         return new Relationship(id, type, sourceNodeId, targetNodeId);
     }
 
-    public String getId() {
+    public static Relationship of(Long id, String type, Long sourceNodeId, Long targetNodeId) {
+        return new Relationship(id, type, sourceNodeId, targetNodeId);
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -32,11 +33,11 @@ public class Relationship {
         return type;
     }
 
-    public String getSourceNodeId() {
+    public Long getSourceNodeId() {
         return sourceNodeId;
     }
 
-    public String getTargetNodeId() {
+    public Long getTargetNodeId() {
         return targetNodeId;
     }
 
